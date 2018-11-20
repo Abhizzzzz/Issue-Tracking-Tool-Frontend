@@ -1,0 +1,112 @@
+  <!-- loader -->
+  <ngx-spinner class="myspiner" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" loadingText="Loading..." type="square-jelly-box">
+    </ngx-spinner>
+<div class="container-fluid" style="margin-top: -2rem;">
+    <div toastContainer (click) ="onNotification($event)"> </div>
+
+    <div class="row">
+
+      <div class="col-12 col-sm-4 col-md-4 col-lg-3 col-xl-3 displayNoneMobile" style="background-color: rgb(217, 230, 238)">
+          
+          <form #editIssue="ngForm" (ngSubmit)="editAIssue()" *ngIf="currentIssue">
+            <br>
+              <h4 class="colorAdjust" style="text-align: center">{{currentIssue.title}} issue detailed description</h4>
+              <br>
+              <div class="row">
+                  <div class="col-6" style="margin-top: 1rem;">
+                      <div class="form-group">
+                          <!-- <label for="exampleInputEmail1">Date</label>
+                                <input type="text" class="form-control" [(ngModel)]="date" name="date" aria-describedby="dateHelp" placeholder="Date"
+                                  required> -->
+                          <i class="fa fa-calendar" style="font-size: 1.5rem;color:red"></i>
+                          {{currentIssue.createdOn | date}}
+                        </div>
+                  </div>
+                  <div class="col-6">
+                      <div class="dropdown ">
+                          <a class="fa fa-eye dropbtn" (click)="joinIssue()"></a>
+                          <div class="dropdown-content">
+                            <a *ngFor="let watcher of watcherList">{{watcher.name | titlecase}}</a>
+                            
+                          </div>
+                        </div>
+                  </div>
+                </div>
+                <hr class="my-4">
+        
+            <!-- <a class="fa fa-eye" style="font-size:2rem;" (click)="joinIssue()"></a>
+            <div *ngFor="let watcher of watcherList">{{watcher.name | titlecase}}</div> -->
+              
+
+            
+            
+           
+            <div class="form-group">
+              <p class="textCenterAdjust">Assignee</p>
+              <input type="text" class="form-control" [(ngModel)]="currentIssue.assignee" name="assignee" aria-describedby="assigneeHelp" placeholder="Assignee's Full Name"
+                required>
+            </div>
+        
+            <div class="form-group">
+                <p class="textCenterAdjust">Reporter</p>
+              <input type="text" class="form-control" [(ngModel)]="currentIssue.reporter" name="reporter" aria-describedby="reportereHelp" placeholder="Reporter's Full Name"
+                required readonly>
+            </div>
+        
+            <div class="form-group">
+                <p class="textCenterAdjust">Status</p>
+              <!-- <input type="text" class="form-control" [(ngModel)]="currentIssue.status" name="status" aria-describedby="statusHelp"
+                required> -->
+              <select [(ngModel)]="currentIssue.status" #category="ngModel" name="status" class="form-control" id="category" required>
+                <option *ngFor="let category of possibleStatus" [value]="category">{{category}}</option>
+              </select>
+            </div>
+        
+        
+          </form>
+          <button (click)="logout()" style="width: 100%" class="btn btn-danger" *ngIf="currentIssue">Logout</button>
+      </div>
+
+      <div class="col-12 col-sm-8 col-md-8 col-lg-9 col-xl-9">
+        <form #editIssue="ngForm" (ngSubmit)="editAIssue()" *ngIf="currentIssue">
+          <br>
+            <div class="form-group">
+                <p class="textCenterAdjust">Title</p>
+                <input type="text" class="form-control" [(ngModel)]="currentIssue.title" name="title" aria-describedby="titleHelp" placeholder="Issue Title"
+                  required>
+              </div>
+        <div class="form-group">
+            <!-- <label for="exampleInputEmail1">Description</label> -->
+            <textarea [froalaEditor]='options' [(froalaModel)]="currentIssue.description" required> </textarea>
+             <button style="margin-top: 0.5rem" type="submit" class="btn btn-primary">Update Issue</button> <!-- [disabled]="editIssue.form.valid || editIssue.form.pristine" -->
+          </div>
+      
+          <h5>Comments</h5>
+          <label for="exampleComment" *ngIf="commentsOnThisIssue.length == 0">Be the first one to comment</label>
+      
+          <div class="row" *ngFor="let data of commentsOnThisIssue">
+            <div class="col-0" style="margin-left: 0.5rem;">
+              <i class="fa fa-user-circle-o" style="font-size:2rem;color: blue;"></i>
+            </div>
+            <div class="col-11">
+              <b style="font-size: 1rem;">{{data.commenterName | titlecase}} &nbsp;
+                <span class="font-weight-light" style="font-size: 0.7rem;">{{data.createdOn | date}}</span>
+              </b>
+              <p style="font-size: 0.8rem;">{{data.comment}}</p>
+            </div>
+          </div>
+      
+          <div class="form-group">
+      
+            <textarea rows="2" #commentBox="ngModel" class="form-control" [(ngModel)]="comments" name="comments" aria-describedby="commentsHelp"
+              placeholder="Add a comment" required></textarea>
+            <button style="margin-top: 0.5rem" (click)="addComment()" type="button" class="btn btn-primary" [disabled]="!commentBox.valid">Comment</button>
+          </div>
+  </form>
+  </div>
+
+    </div>
+
+    
+
+</div>

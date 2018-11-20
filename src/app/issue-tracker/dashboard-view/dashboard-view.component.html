@@ -1,0 +1,123 @@
+  <!-- loader -->
+  <ngx-spinner class="myspiner" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" loadingText="Loading..." type="square-jelly-box">
+    </ngx-spinner>
+<div class="container">
+  <div toastContainer (click)="onNotification($event)"> </div>
+  <h6 class="display-4 " style="text-align: center">Welcome {{userInfo.userDetails.firstName | uppercase}} to your Dashboard!</h6>
+  <br>
+
+  <div class="row">
+    <div class="col-12">
+      Filter By:
+    </div>
+    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+      <select class="form-control" (change)="selectOption($event.target.value)">
+        <option value="title" selected>Title</option>
+        <option value="reporter">Reporter</option>
+        <option value="status">Status</option>
+      </select>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+      <div class="input-group mb-3">
+        <input type="text" #filterBy="ngModel" [(ngModel)]="filterValue" class="form-control" placeholder="value to filter" aria-label="Recipient's username"
+          aria-describedby="button-addon2" required>
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" (click)="getIssuesFilterBy()" type="button" id="button-addon2" [disabled]="!filterBy.valid">Filter</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div style="text-align: center">
+    <!-- Button trigger modal -->
+    <button type="button" style="width: 50%" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+      Create a issue
+    </button>
+  </div>
+  <br>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Create a new issue</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+          <form #createIssue="ngForm" (ngSubmit)="createAIssue()">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Title</label>
+              <input type="text" class="form-control" [(ngModel)]="title" name="title" aria-describedby="titleHelp" placeholder="Issue Title"
+                required>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Description</label>
+              <textarea [froalaEditor]='options' [(froalaModel)]="description" (froalaInit)="initialize($event)" required> </textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Assignee</label>
+              <input type="text" class="form-control" [(ngModel)]="assignee" name="assignee" aria-describedby="assigneeHelp" placeholder="Assignee's Name"
+                required>
+                <small id="emailHelp" class="form-text text-muted">Kindly enter full name of assignee</small>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" [disabled]="!createIssue.form.valid">Create</button>
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="issueList">
+    <table class="table">
+      <thead class="bg-warning">
+        <tr>
+          <th scope="col">TITLE</th>
+          <th scope="col">REPORTER</th>
+          <th scope="col">DATE</th>
+          <th scope="col">STATUS</th>
+        </tr>
+      </thead>
+      <tbody class="bg-light">
+
+        <tr *ngFor="let issue of issueList | paginate: { itemsPerPage: 10, currentPage: p }" (click)="issueSelected(issue.issueId)">
+
+          <td>{{issue.title}}</td>
+          <td>{{issue.reporter | titlecase}}</td>
+          <td>{{issue.createdOn | date}}</td>
+          <td>{{issue.status | titlecase}}</td>
+
+        </tr>
+
+      </tbody>
+    </table>
+    <pagination-controls style="text-align: center" (pageChange)="p = $event"></pagination-controls>
+
+  </div>
+
+
+  <div *ngIf="!issueList" style="text-align: center">
+    <i class='fa fa-user-times' style='font-size: 20rem;color:red;'></i>
+    <h6 class="display-4">No reporter's has assigned you a issue,You can create/search some issue's</h6>
+  </div>
+
+  <div style="text-align: center">
+    <button (click)="logout()" style="width: 50%" class="btn btn-danger">Logout</button>
+  </div>
+  <br>
+
+</div>

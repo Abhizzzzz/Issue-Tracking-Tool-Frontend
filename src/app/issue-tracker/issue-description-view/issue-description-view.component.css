@@ -1,0 +1,43 @@
+.dropbtn {
+    /* background-color: #4CAF50; */
+    /* color: white; */
+    padding: 1rem;
+    font-size: 2rem;
+    border: none;
+    cursor: pointer;transition: all .25s ease-in-out;
+    
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #330033;
+    min-width: 10rem;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.textCenterAdjust{
+    text-align: center;
+    /* font-weight: bold; */
+    font-size: 1rem;
+}
+.myspiner /deep/ .black-overlay{
+    position: fixed;
+}
+

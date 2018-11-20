@@ -1,0 +1,9 @@
+tbody tr{
+    cursor: pointer;transition: all .25s ease-in-out;
+}
+tbody tr:hover{
+    background-color: peachpuff;
+}
+.myspiner /deep/ .black-overlay{
+    position: fixed;
+}

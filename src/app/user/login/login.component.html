@@ -1,0 +1,25 @@
+  <!-- loader -->
+  <ngx-spinner class="myspiner" bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" loadingText="Loading..." type="square-jelly-box">
+  </ngx-spinner>
+<div class="container">
+    <div toastContainer> </div>
+  <h6 class="display-4 " style="text-align: center">Log In To Your Account!!</h6>
+  <br>
+  <form #loginForm="ngForm" (ngSubmit)="login()">
+    <div class="form-group">
+      <label for="exampleInputEmail1">Email address</label>
+      <input type="email" class="form-control" [(ngModel)]="email" name="email" aria-describedby="emailHelp" placeholder="Email"
+        required>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputPassword1">Password</label>
+      <input type="password" class="form-control" [(ngModel)]="password" name="password" placeholder="Password" required>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="!loginForm.form.valid">Submit</button>
+  </form>
+  <br>
+  <p>
+    <span class="font-weight-light">Need a account?</span>&nbsp;
+    <a href="/signup" style="text-decoration-line: none">Sign-Up</a>
+  </p>
+</div>
